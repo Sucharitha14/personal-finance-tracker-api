@@ -2,19 +2,23 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from extensions import db
 from models import Transaction
+from datetime import datetime
 
-transaction_bp = Blueprint("transactions", __name__, url_prefix="/api")
+transaction_bp = Blueprint("transactions", __name__)
 
 
 @transaction_bp.route("/transactions", methods=["POST"])
 @jwt_required()
 def add_transaction():
     data = request.get_json()
-
+    
     amount = data.get("amount")
     category = data.get("category")
     description = data.get("description")
-    date = data.get("date")
+    date = data.get("date") or datetime.utcnow()
+
+    if amount is None or category is None:
+        return jsonify({"error": "Amount and category are required"}), 422
 
     user_id = get_jwt_identity()
 
@@ -45,7 +49,8 @@ def get_transactions():
             "id": t.id,
             "amount": t.amount,
             "category": t.category,
-            "description": t.description
+            "description": t.description,
+            "date": t.date.strftime("%Y-%m-%d %H:%M:%S")
         })
 
     return jsonify(result), 200

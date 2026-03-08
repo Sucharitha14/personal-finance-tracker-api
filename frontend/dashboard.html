@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Finance Tracker</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<h1>Finance Tracker Dashboard</h1>
+
+<button id="logoutBtn">Logout</button>
+
+<hr>
+
+<h2>Add Transaction</h2>
+
+<form id="transactionForm">
+
+    <label>Amount</label><br>
+    <input type="number" id="amount" required><br><br>
+
+    <label>Category</label><br>
+    <input type="text" id="category" required><br><br>
+
+    <label>Description</label><br>
+    <input type="text" id="description"><br><br>
+
+    <button type="submit">Add Transaction</button>
+
+</form>
+
+<hr>
+
+<h2>Your Transactions</h2>
+
+<ul id="transactionList">
+
+</ul>
+
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>
